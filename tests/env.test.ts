@@ -23,6 +23,16 @@ describe("production environment check", () => {
     expect(() => env()).toThrow(EnvError)
   })
 
+  it("accepts the switch in any case and with stray spaces", () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {})
+    for (const value of ["TRUE", " True ", "1"]) {
+      production({ ALLOW_INCOMPLETE_SETUP: value })
+      expect(env().ALLOW_INCOMPLETE_SETUP).toBe(true)
+    }
+    production({ ALLOW_INCOMPLETE_SETUP: "" })
+    expect(() => env()).toThrow(EnvError)
+  })
+
   it("boots with ALLOW_INCOMPLETE_SETUP and lists what is missing", () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
     production({ ALLOW_INCOMPLETE_SETUP: "true", AUTH_SECRET: "x".repeat(32) })

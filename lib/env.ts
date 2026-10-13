@@ -8,10 +8,13 @@ import { z } from "zod"
  * media on local disk, the mock Higgsfield server) and says so once.
  */
 
+/** "true"/"false"/"1"/"0" in any case, surrounding spaces ignored; empty uses the fallback. */
 const bool = (fallback: boolean) =>
   z
-    .enum(["true", "false", "1", "0"])
+    .string()
     .optional()
+    .transform((value) => value?.trim().toLowerCase() || undefined)
+    .pipe(z.enum(["true", "false", "1", "0"]).optional())
     .transform((value) =>
       value === undefined ? fallback : value === "true" || value === "1"
     )
@@ -177,4 +180,5 @@ function isBuildPhase(): boolean {
 /** Tests replace process.env between suites. */
 export function resetEnvForTests(): void {
   cached = undefined
+  warned = false
 }
