@@ -31,7 +31,7 @@ import { Logo } from "./logo"
 import { navLinks } from "./nav-links"
 
 /**
- * The site header: logo · Explore · Image · Video · (Audio) · Effects ·
+ * The site header: logo · Explore · Travel Studio · Image · Video · (Audio) · Effects ·
  * Community · Pricing, then the credit pill, Upgrade and the avatar menu
  * (or Login / Sign up). `compact` is the 36 px app-page variant.
  */

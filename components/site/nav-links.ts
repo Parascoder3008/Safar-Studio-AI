@@ -6,11 +6,16 @@ export type NavLink = {
   match: (path: string) => boolean
 }
 
-/** Top navigation, in site order. Audio appears once an audio model exists. */
+/** Top navigation, in site order. Travel Studio leads; Audio appears once an audio model exists. */
 export function navLinks(): NavLink[] {
   const surfaces = activeSurfaces()
   const links: NavLink[] = [
     { href: "/", label: "Explore", match: (path) => path === "/" },
+    {
+      href: "/travel",
+      label: "Travel Studio",
+      match: (path) => path.startsWith("/travel"),
+    },
     {
       href: "/image",
       label: "Image",

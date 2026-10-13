@@ -20,6 +20,43 @@ accent, generator panel, justified feeds); the brand, copy and media are ours.
 | Generation | Higgsfield REST API, one server-side key |
 | Media | Cloudflare R2 (every output is copied; the platform keeps outputs ≥ 7 days) |
 
+## Travel Studio
+
+`/travel` is where travel teams start. The agent fills one **trip brief**
+(destination, trip type, hotel or package, nights, price, highlights,
+itinerary, agency name and contact) and turns it into any of eight formats:
+
+| Format | Model | Output |
+|---|---|---|
+| Destination teaser reel | Seedance 2.5 | 9:16, 10 s, multi-shot |
+| Hotel walkthrough | Kling 3.0 | 9:16, 8 s, from the agent's hotel photo |
+| Drone reveal | Kling 3.0 | 16:9, 8 s |
+| Package ad poster | Ideogram 4.0 | 4:5 with headline, duration, price and contact printed |
+| Itinerary day card | Ideogram 4.0 | 4:5, one card per itinerary day |
+| Traveller moment | Soul 2 | 3:4 lifestyle photo |
+| Website hero banner | Soul Cinema | 16:9 with room for a headline |
+| Local flavours | Soul 2 | 1:1 food photo |
+
+**Create** loads the format's model, settings and prompt into the generator.
+The normal Generate button then prices, debits and submits it, so billing,
+validation and the library are unchanged.
+
+The travel knowledge lives in `lib/travel/`:
+
+- `destinations.ts`: 48 destinations across six regions, each with landmarks,
+  scenery, signature experiences, cuisine and best months.
+- `brief.ts`: the brief, trip types, currencies and text helpers.
+- `formats.ts`: the formats and the pure `buildContent(format, brief, day?)`
+  prompt builder.
+- `brief-store.ts`: the brief, persisted in the browser.
+
+`tests/travel.test.ts` builds every format for every destination and trip
+type. It checks that the settings are valid for the model, that the prompt
+fits the model's limit, and that the format has a price.
+
+To add a destination, add an entry to `DESTINATIONS`. To add a format, add it
+to `TRAVEL_FORMATS` and a `case` in `buildContent`.
+
 ## Quick start (fully offline)
 
 Nothing external is needed to run the whole product locally: a local MongoDB

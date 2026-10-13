@@ -33,6 +33,32 @@ That is safe because there are no existing users. `docs/screens/vireo-*` and
 the UI inventory still show the old brand. Re-capture them with
 `scripts/screenshots.ts` once the travel presets have their own media.
 
+## Travel layer (2026-10-13)
+
+- **The travel knowledge lives in the product, not the models.** The image
+  and video models are rented through the Higgsfield API and can't be
+  trained. A trip brief, the destination library and per-format prompt
+  builders are what make the output specific to travel.
+- **Global market first.** 48 destinations across Europe, the Middle East,
+  Asia, Africa, the Americas and Oceania. 11 currencies, and prices are
+  formatted with `Intl.NumberFormat`.
+- **Formats hand off to the generator** instead of submitting directly.
+  Pricing, credit checks, catalog validation, auth and the library keep a
+  single code path. The agent sees the price and can edit the prompt before
+  generating.
+- **Model per format:** Ideogram 4.0 for anything with printed text (posters,
+  itinerary cards). Seedance 2.5 for multi-shot reels. Kling 3.0 for single
+  smooth camera moves and image-to-video. Soul 2 and Soul Cinema for
+  photoreal people and scenery.
+- **Poster text is short by design:** headline ≤ 40 characters, at most three
+  highlights, and double quotes are swapped for single quotes. Image models
+  render short quoted text far more reliably than long copy.
+- **The brief is stored in the browser** (`safarstudio.brief.v1`). Move it to
+  MongoDB per user when teams need it shared across devices or seats.
+- **Not done yet:** the Effects presets and their covers are still the generic
+  set inherited from Vireo. They need travel presets with covers generated
+  through the app once a Higgsfield key is configured.
+
 ## Sources and precedence
 
 1. **Live docs win for API behavior, template wins for UI** (brief §0.3). Model

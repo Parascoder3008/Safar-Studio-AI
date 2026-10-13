@@ -9,6 +9,8 @@ scaffolded from `higgsfield-ai/app-templates` (studio). Read `README.md`,
 - `app/(site)` marketing pages (expanded nav + footer) · `app/(studio)` full-height
   workspaces (generators, library) · `app/(app)` scrolling signed-in pages
   (account, billing, admin) · `app/api` route handlers · `app/actions` server actions.
+- `lib/travel` (destination library, trip brief, travel formats and their
+  prompt builder) and `components/travel` (the `/travel` Travel Studio page).
 - `generation/catalog/models/*.ts` — one file per model family; the barrel is
   generated (`pnpm models`). Never hand-edit `models.generated.ts`.
 - `lib/higgsfield` (server-only platform client), `lib/generations` (submit,

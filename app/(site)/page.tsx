@@ -117,10 +117,10 @@ export default async function ExplorePage() {
           </p>
           <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
-              href="/video"
+              href="/travel"
               className="btn-keycap inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-6 text-base font-semibold sm:w-auto"
             >
-              <Sparkles className="size-4" aria-hidden /> Start creating
+              <Sparkles className="size-4" aria-hidden /> Open Travel Studio
             </Link>
             <Link
               href="/effects"
@@ -378,20 +378,20 @@ export default async function ExplorePage() {
             id="cta-title"
             className="font-display text-[36px] leading-[0.95] text-white md:text-[56px]"
           >
-            Your next shot
+            Your next campaign
             <br />
-            <span className="text-lime">starts with a sentence.</span>
+            <span className="text-lime">starts with a trip brief.</span>
           </h2>
           <p className="max-w-[440px] text-sm text-white/75 md:text-base">
-            Describe it, pick a model, press Generate. Keep the takes you love
-            in your library and publish the best ones.
+            Pick the destination, add the hotel, price and itinerary, and turn
+            it into reels, posters and itinerary cards in minutes.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/video"
+              href="/travel"
               className="btn-keycap inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-base font-semibold"
             >
-              <Sparkles className="size-4" aria-hidden /> Start creating
+              <Sparkles className="size-4" aria-hidden /> Start a trip brief
             </Link>
             <Link
               href="/pricing"
