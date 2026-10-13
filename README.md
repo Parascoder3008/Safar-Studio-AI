@@ -92,7 +92,7 @@ reconciler runs in-process every 5 s because there is no cron or webhook tunnel.
 
 | Service | What to set | Notes |
 |---|---|---|
-| MongoDB Atlas | `MONGODB_URI`, `MONGODB_DB` | Any replica set (Atlas M0 works). Run `pnpm db:init` against it. |
+| MongoDB Atlas | `MONGODB_URI`, `MONGODB_DB` | Any replica set (Atlas M0 works). Indexes and presets are created automatically on the first connection; `pnpm db:init --admin=you@example.com` is only needed to grant admin. |
 | Resend | `AUTH_RESEND_KEY`, `EMAIL_FROM` | Verify the sending domain first. |
 | Higgsfield | `HF_API_BASE_URL=https://api.higgsfield.ai`, `HF_CREDENTIALS=key_id:key_secret` | Keys from [console.higgsfield.ai](https://console.higgsfield.ai). Then run `pnpm pricing:sync`. |
 | Webhooks | `HF_WEBHOOK_SECRET`, `HF_WEBHOOK_BASE_URL` | Public HTTPS origin. Locally: `cloudflared tunnel --url http://localhost:3000` and put the URL here. |

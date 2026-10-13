@@ -7,7 +7,9 @@ import { findModel } from "@/generation/catalog"
 import { UserFacingError } from "@/lib/errors"
 import { collections, type PresetDoc } from "@/lib/db/collections"
 
-import { PRESET_LOOPS, PRESET_SEED } from "./seed-data"
+import { coverFor, seedPresetDocs } from "./seed"
+
+export { coverFor }
 
 export interface PresetView {
   id: string
@@ -23,10 +25,6 @@ export interface PresetView {
   coverVideoUrl?: string
   category: string
   active: boolean
-}
-
-export function coverFor(slug: string): string {
-  return `/media/presets/${slug}.jpg`
 }
 
 function toView(doc: PresetDoc): PresetView {
@@ -50,29 +48,7 @@ function toView(doc: PresetDoc): PresetView {
 /** Seed presets that don't exist yet (never overwrites admin edits). */
 export async function seedPresets(): Promise<number> {
   const { presets } = await collections()
-  let inserted = 0
-  for (const seed of PRESET_SEED) {
-    const now = new Date()
-    const result = await presets.updateOne(
-      { slug: seed.slug },
-      {
-        $setOnInsert: {
-          _id: new ObjectId(),
-          ...seed,
-          coverUrl: coverFor(seed.slug),
-          ...(PRESET_LOOPS[seed.slug]
-            ? { coverVideoUrl: PRESET_LOOPS[seed.slug] }
-            : {}),
-          active: true,
-          createdAt: now,
-          updatedAt: now,
-        },
-      },
-      { upsert: true }
-    )
-    if (result.upsertedCount) inserted++
-  }
-  return inserted
+  return seedPresetDocs(presets)
 }
 
 export async function listPresets(

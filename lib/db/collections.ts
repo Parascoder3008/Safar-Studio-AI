@@ -1,11 +1,14 @@
 import "server-only"
 
-import type { ObjectId } from "mongodb"
+import type { Db, ObjectId } from "mongodb"
 
 import type { MediaKind, MediaRole, Surface } from "@/generation/catalog/types"
 import type { PlanId, BillingInterval } from "@/lib/billing/plans"
 import type { PriceRule } from "@/lib/billing/pricing-types"
 
+import { seedPresetDocs } from "@/lib/presets/seed"
+
+import { ensureIndexes } from "./indexes"
 import { db } from "./mongo"
 
 /* ── Users (Auth.js adapter document + our fields) ────────────────────────── */
@@ -257,8 +260,44 @@ export interface DevMailDoc {
 
 /* ── Typed accessors ─────────────────────────────────────────────────────── */
 
+/**
+ * Bump when `ensureIndexes` or the preset seed changes so every database
+ * re-runs setup once. The unique ledger index is what keeps credit grants and
+ * refunds idempotent, so setup must finish before the app writes anything.
+ */
+const SETUP_VERSION = 1
+
+let setup: Promise<void> | undefined
+
+async function runSetup(database: Db): Promise<void> {
+  const meta = database.collection<{
+    _id: string
+    version: number
+    at: Date
+  }>("app_meta")
+  const done = await meta.findOne({ _id: "setup" })
+  if (done && done.version >= SETUP_VERSION) return
+  await ensureIndexes(database)
+  await seedPresetDocs(database.collection<PresetDoc>("presets"))
+  await meta.updateOne(
+    { _id: "setup" },
+    { $set: { version: SETUP_VERSION, at: new Date() } },
+    { upsert: true }
+  )
+}
+
+/** One setup check per server instance; a failure is retried on the next call. */
+function ensureSetup(database: Db): Promise<void> {
+  setup ??= runSetup(database).catch((error: unknown) => {
+    setup = undefined
+    throw error
+  })
+  return setup
+}
+
 export async function collections() {
   const database = await db()
+  await ensureSetup(database)
   return {
     users: database.collection<UserDoc>("users"),
     generations: database.collection<GenerationDoc>("generations"),
