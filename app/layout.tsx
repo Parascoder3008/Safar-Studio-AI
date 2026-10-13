@@ -35,8 +35,17 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 })
 
+/** APP_URL when it is a valid absolute URL, else the brand's production URL. */
+function siteUrl(): URL {
+  try {
+    return new URL(process.env.APP_URL ?? BRAND.productionUrl)
+  } catch {
+    return new URL(BRAND.productionUrl)
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL ?? BRAND.productionUrl),
+  metadataBase: siteUrl(),
   title: {
     default: `${BRAND.name} — AI content studio for travel`,
     template: `%s · ${BRAND.name}`,

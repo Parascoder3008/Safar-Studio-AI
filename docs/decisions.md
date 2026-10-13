@@ -61,11 +61,14 @@ the UI inventory still show the old brand. Re-capture them with
 
 ## Hosting on Vercel Hobby (2026-10-13)
 
-- **`ALLOW_INCOMPLETE_SETUP`** lets production boot before all 14 required
-  services are connected. It logs the missing variables once, and each
-  feature fails with its own error (no DB means signed-out, no Stripe means
-  no checkout). Without it, production still fails fast. Remove it before
-  real users arrive.
+- **Production boots with services missing.** Missing required variables
+  are logged once, and each feature fails with its own error (no DB means
+  signed-out, no Stripe means no checkout). An invalid value is ignored and
+  its default applies, so one typo can't take every page down.
+  `REQUIRE_ALL_SERVICES=true` restores fail-fast: no boot until every
+  required variable is set and valid. Turn it on before real users arrive.
+  This replaced an opt-in `ALLOW_INCOMPLETE_SETUP` switch, which left the site
+  down whenever the switch was missing or mistyped in the dashboard.
 - **Reconcile cron runs daily (`0 3 * * *`).** Hobby only allows daily cron
   jobs. Before generation goes live, either move to Pro and restore
   `* * * * *`, or call `/api/cron/reconcile` every few minutes from an

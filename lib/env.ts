@@ -76,11 +76,11 @@ const schema = z.object({
 
   CRON_SECRET: optionalString,
   /**
-   * Launch switch: lets a production deployment boot while services are still
-   * being connected. Missing services are logged once and the features that
-   * need them fail with their own errors. Remove it before real users arrive.
+   * Launch gate: when true, production refuses to boot unless every required
+   * service is configured, and rejects invalid values instead of ignoring
+   * them. Off by default so the site stays up while services are connected.
    */
-  ALLOW_INCOMPLETE_SETUP: bool(false),
+  REQUIRE_ALL_SERVICES: bool(false),
   /** Test-only hooks (dev mailbox route). Never honoured on the production deployment. */
   E2E_TEST_MODE: bool(false),
   /** Required header value for the test mailbox outside development (preview deploys). */
@@ -116,27 +116,58 @@ export class EnvError extends Error {
 let cached: Env | undefined
 let warned = false
 
+/** Read before parsing: decides how strictly the rest is parsed. */
+function strictProduction(): boolean {
+  return (
+    process.env.NODE_ENV === "production" &&
+    /^(true|1)$/i.test(process.env.REQUIRE_ALL_SERVICES?.trim() ?? "")
+  )
+}
+
+function issueLines(error: z.ZodError): string {
+  return error.issues
+    .map((issue) => `  • ${issue.path.join(".")}: ${issue.message}`)
+    .join("\n")
+}
+
+/**
+ * Parse process.env. In production (unless strict), a variable with an
+ * invalid value is dropped so its default applies: one typo in the hosting
+ * dashboard shouldn't take every page down. Development and tests still fail.
+ */
+function parseEnv(): Env {
+  const parsed = schema.safeParse(process.env)
+  if (parsed.success) return parsed.data
+  if (process.env.NODE_ENV !== "production" || strictProduction())
+    throw new EnvError(`Invalid environment:\n${issueLines(parsed.error)}`)
+  const invalid = new Set(parsed.error.issues.map((issue) => issue.path[0]))
+  const retry = schema.safeParse(
+    Object.fromEntries(
+      Object.entries(process.env).filter(([key]) => !invalid.has(key))
+    )
+  )
+  if (!retry.success)
+    throw new EnvError(`Invalid environment:\n${issueLines(retry.error)}`)
+  console.error(
+    `[env] Ignoring invalid values; their defaults apply:\n${issueLines(parsed.error)}`
+  )
+  return retry.data
+}
+
 export function env(): Env {
   if (cached) return cached
-  const parsed = schema.safeParse(process.env)
-  if (!parsed.success) {
-    const lines = parsed.error.issues.map(
-      (issue) => `  • ${issue.path.join(".")}: ${issue.message}`
-    )
-    throw new EnvError(`Invalid environment:\n${lines.join("\n")}`)
-  }
-  const value = parsed.data
+  const value = parseEnv()
   if (value.NODE_ENV === "production" && !isBuildPhase()) {
     const missing = REQUIRED_IN_PRODUCTION.filter((key) => !value[key])
     const list = missing.map((key) => `  • ${key}`).join("\n")
-    if (missing.length && !value.ALLOW_INCOMPLETE_SETUP)
+    if (missing.length && value.REQUIRE_ALL_SERVICES)
       throw new EnvError(
         `Missing required production environment variables:\n${list}\nSee .env.example for what each one does.`
       )
     if (missing.length && !warned) {
       warned = true
       console.warn(
-        `[env] ALLOW_INCOMPLETE_SETUP is on. Features that need these are unavailable:\n${list}`
+        `[env] Not configured yet; features that need these are unavailable:\n${list}`
       )
     }
   }
