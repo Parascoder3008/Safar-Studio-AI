@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "local": "tsx scripts/local.ts",
     "build": "next build && node scripts/check-client-secrets.mjs",
     "start": "next start",
     "lint": "eslint",

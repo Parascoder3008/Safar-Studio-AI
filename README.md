@@ -59,34 +59,33 @@ to `TRAVEL_FORMATS` and a `case` in `buildContent`.
 
 ## Quick start (fully offline)
 
-Nothing external is needed to run the whole product locally: a local MongoDB
-replica set, a mock Higgsfield API and a dev mailbox stand in for the services.
+You need Node 22 or newer (https://nodejs.org). Nothing else and no accounts:
 
 ```bash
+git clone https://github.com/Parascoder3008/Safar-Studio-AI
+cd Safar-Studio-AI
+corepack enable        # once per computer: provides pnpm
 pnpm install
-cp .env.example .env.local      # then fill AUTH_SECRET: openssl rand -base64 32
+pnpm local
 ```
 
-In three terminals:
+`pnpm local` writes `.env.local` with offline settings on first run. It then
+starts a local MongoDB replica set (downloaded on first run, about 100 MB),
+a mock Higgsfield API and the dev server, all in one terminal. Open
+http://localhost:3000/travel. Sign in with any email: the sign-in link
+prints in the terminal as `[email:dev] Link`. New accounts get 200 credits.
+Generation uses the mock API, which returns sample media. Ctrl+C stops
+everything.
 
-```bash
-pnpm db:dev            # MongoDB replica set on :27027 (data in .data/mongo)
-pnpm mock:higgsfield   # mock platform on :4010 ("[fail]", "[nsfw]", "[slow]" in a prompt steer outcomes)
-pnpm dev               # http://localhost:3000
-```
+In the mock, `[fail]`, `[nsfw]` or `[slow]` in a prompt force that outcome.
+The reconciler runs in-process every 5 s because locally there is no cron or
+webhook tunnel. To use a real service, put its variables in `.env.local` (see
+`.env.example`). `pnpm local` then skips the local database or the mock for
+anything that points elsewhere.
 
-Once, after the database is up:
-
-```bash
-pnpm db:init --admin=you@example.com   # indexes + Effects presets (+ admin role)
-```
-
-For offline development set in `.env.local`:
-`MONGODB_URI=mongodb://127.0.0.1:27027/?replicaSet=safarstudio`,
-`HF_API_BASE_URL=http://localhost:4010`, `HF_CREDENTIALS=mock:mock`,
-`SIGNUP_BONUS_CREDITS=200`, `E2E_TEST_MODE=true`. Magic links are printed to the
-dev-server log (no Resend key needed); media is stored under `.data/media`; the
-reconciler runs in-process every 5 s because there is no cron or webhook tunnel.
+To run the pieces separately: `pnpm db:dev`, `pnpm mock:higgsfield` and
+`pnpm dev` in three terminals, with `MONGODB_URI=mongodb://127.0.0.1:27027/?replicaSet=safarstudio`,
+`HF_API_BASE_URL=http://localhost:4010` and `HF_CREDENTIALS=mock:mock` in `.env.local`.
 
 ## Real services
 
@@ -128,6 +127,7 @@ submit against the live estimate (`HF_PRICE_GUARD`). Details:
 
 | Command | What it does |
 |---|---|
+| `pnpm local` | Whole app offline in one terminal: local DB + mock API + dev server |
 | `pnpm dev` | Dev server (regenerates the model barrel on change) |
 | `pnpm build` | Production build + client-bundle secret scan |
 | `pnpm typecheck` / `pnpm lint` | `tsc --noEmit` / ESLint |
