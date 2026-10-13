@@ -1,5 +1,5 @@
 /**
- * Capture our pages at 1440 and 390 px into docs/screens/vireo-<page>-<width>.png
+ * Capture our pages at 1440 and 390 px into docs/screens/safarstudio-<page>-<width>.png
  * for side-by-side comparison with the reference captures (docs/screens/<page>-<width>.png).
  *   BASE_URL=http://localhost:3000 pnpm exec tsx scripts/screenshots.ts
  */
@@ -27,7 +27,7 @@ for (const width of [1440, 390]) {
   })
   await context.addInitScript(() =>
     localStorage.setItem(
-      "vireo.consent.v1",
+      "safarstudio.consent.v1",
       JSON.stringify({
         essential: true,
         analytics: false,
@@ -40,7 +40,9 @@ for (const width of [1440, 390]) {
   for (const [name, path] of PAGES) {
     await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" })
     await page.waitForTimeout(800)
-    await page.screenshot({ path: `docs/screens/vireo-${name}-${width}.png` })
+    await page.screenshot({
+      path: `docs/screens/safarstudio-${name}-${width}.png`,
+    })
     console.log(`captured ${name} @ ${width}`)
   }
   await context.close()

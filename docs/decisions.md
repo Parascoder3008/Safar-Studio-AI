@@ -14,6 +14,25 @@ Newest decisions go at the bottom of each section.
 | `SUPPORT_EMAIL` | `support@vireo.studio` | |
 | `CREDIT_MARKUP` | `2.0` | Sell at 2× the Higgsfield API cost; with `CREDIT_USD_VALUE=0.01` a $0.094 image costs 19 credits. |
 
+## Rebrand to SafarStudio AI (2026-10-13)
+
+This repository started as a copy of `albertshiney/higgsfieldclone` ("Vireo").
+The product is now **SafarStudio AI**, a content studio for travel agencies,
+tour operators and hotels. The table above is kept as history; current values:
+
+| Placeholder | Value | Notes |
+|---|---|---|
+| `BRAND_NAME` | **SafarStudio AI** | "Safar" means journey. |
+| `APP_SLUG` | `safarstudio` | Also the default `MONGODB_DB` and the local replica-set name. |
+| `PRODUCTION_URL` | `https://safarstudio.ai` | Placeholder until a domain is bought; set `APP_URL`/`AUTH_URL`. |
+| `EMAIL_FROM` | `SafarStudio AI <login@safarstudio.ai>` | Domain must be verified in Resend. |
+| `SUPPORT_EMAIL` | `support@safarstudio.ai` | |
+
+Browser storage keys and window events moved from `vireo.*` to `safarstudio.*`.
+That is safe because there are no existing users. `docs/screens/vireo-*` and
+the UI inventory still show the old brand. Re-capture them with
+`scripts/screenshots.ts` once the travel presets have their own media.
+
 ## Sources and precedence
 
 1. **Live docs win for API behavior, template wins for UI** (brief §0.3). Model

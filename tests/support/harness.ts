@@ -18,12 +18,12 @@ export function setupEnv(): void {
     HF_API_BASE_URL: "https://hf.test",
     HF_CREDENTIALS: "key:secret",
     HF_WEBHOOK_SECRET: "webhook-secret",
-    HF_WEBHOOK_BASE_URL: "https://vireo.test",
+    HF_WEBHOOK_BASE_URL: "https://safarstudio.test",
     HF_PRICE_GUARD: "false",
     CREDIT_USD_VALUE: "0.01",
     CREDIT_MARKUP: "2",
     RUN_TIMEOUT_MINUTES: "30",
-    LOCAL_MEDIA_DIR: mkdtempSync(join(tmpdir(), "vireo-media-")),
+    LOCAL_MEDIA_DIR: mkdtempSync(join(tmpdir(), "safarstudio-media-")),
   })
 }
 
@@ -34,7 +34,7 @@ export async function startDatabase(): Promise<void> {
     replSet: { count: 1, storageEngine: "wiredTiger" },
   })
   process.env.MONGODB_URI = replSet.getUri()
-  process.env.MONGODB_DB = `vireo-test-${Date.now()}`
+  process.env.MONGODB_DB = `safarstudio-test-${Date.now()}`
   const { resetEnvForTests } = await import("@/lib/env")
   resetEnvForTests()
   const { db } = await import("@/lib/db/mongo")

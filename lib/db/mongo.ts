@@ -15,7 +15,7 @@ type MongoCache = {
 }
 
 const globalForMongo = globalThis as typeof globalThis & {
-  __vireoMongo?: MongoCache
+  __safarstudioMongo?: MongoCache
 }
 
 export class DatabaseNotConfiguredError extends Error {
@@ -35,18 +35,18 @@ function uri(): string {
 
 export function mongoClient(): Promise<MongoClient> {
   const target = uri()
-  const cached = globalForMongo.__vireoMongo
+  const cached = globalForMongo.__safarstudioMongo
   if (cached && cached.uri === target) return cached.promise
   const client = new MongoClient(target, {
-    appName: "vireo-studio",
+    appName: "safarstudio",
     maxPoolSize: 20,
     serverSelectionTimeoutMS: 8_000,
   })
   const promise = client.connect()
-  globalForMongo.__vireoMongo = { uri: target, client, promise }
+  globalForMongo.__safarstudioMongo = { uri: target, client, promise }
   promise.catch(() => {
-    if (globalForMongo.__vireoMongo?.client === client)
-      globalForMongo.__vireoMongo = undefined
+    if (globalForMongo.__safarstudioMongo?.client === client)
+      globalForMongo.__safarstudioMongo = undefined
   })
   return promise
 }
@@ -57,7 +57,7 @@ export async function db(): Promise<Db> {
 
 /** Tests close the pool between suites. */
 export async function closeMongoForTests(): Promise<void> {
-  const cached = globalForMongo.__vireoMongo
-  globalForMongo.__vireoMongo = undefined
+  const cached = globalForMongo.__safarstudioMongo
+  globalForMongo.__safarstudioMongo = undefined
   if (cached) await (await cached.promise).close()
 }

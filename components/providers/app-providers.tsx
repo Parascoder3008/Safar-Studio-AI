@@ -50,7 +50,7 @@ type AppContextValue = {
 
 const AppContext = createContext<AppContextValue | null>(null)
 
-export const BALANCE_EVENT = "vireo:balance"
+export const BALANCE_EVENT = "safarstudio:balance"
 
 /** Ask every credit pill to refetch (after a submit, refund or purchase). */
 export function announceBalanceChange(): void {

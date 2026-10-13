@@ -29,8 +29,8 @@ const schema = z.object({
 
   AUTH_SECRET: optionalString,
   AUTH_RESEND_KEY: optionalString,
-  EMAIL_FROM: z.string().default("Vireo <login@vireo.studio>"),
-  SUPPORT_EMAIL: z.email().default("support@vireo.studio"),
+  EMAIL_FROM: z.string().default("SafarStudio AI <login@safarstudio.ai>"),
+  SUPPORT_EMAIL: z.email().default("support@safarstudio.ai"),
   SIGNUP_BONUS_CREDITS: z.coerce.number().int().min(0).default(0),
   /** Comma-separated emails that get the admin role. */
   ADMIN_EMAILS: z
@@ -45,7 +45,7 @@ const schema = z.object({
   BLOCK_DISPOSABLE_EMAIL: bool(true),
 
   MONGODB_URI: optionalString,
-  MONGODB_DB: z.string().default("vireo-studio"),
+  MONGODB_DB: z.string().default("safarstudio"),
 
   HF_API_BASE_URL: z.url().default("https://api.higgsfield.ai"),
   HF_CREDENTIALS: optionalString.refine(

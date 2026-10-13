@@ -12,7 +12,7 @@ const dbPath = join(process.cwd(), ".data", "mongo")
 mkdirSync(dbPath, { recursive: true })
 
 const replSet = await MongoMemoryReplSet.create({
-  replSet: { count: 1, storageEngine: "wiredTiger", name: "vireo" },
+  replSet: { count: 1, storageEngine: "wiredTiger", name: "safarstudio" },
   instanceOpts: [{ port: 27027, dbPath }],
 })
 console.log(

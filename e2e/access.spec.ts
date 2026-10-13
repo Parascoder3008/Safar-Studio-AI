@@ -4,7 +4,7 @@ import { dismissCookies, signIn, uniqueEmail } from "./helpers"
 
 const consent = () =>
   localStorage.setItem(
-    "vireo.consent.v1",
+    "safarstudio.consent.v1",
     JSON.stringify({
       essential: true,
       analytics: false,

@@ -1,6 +1,7 @@
-# Vireo — AI image & video studio
+# SafarStudio AI — AI content studio for travel
 
-Vireo is a production-grade studio for generating images and video with every
+SafarStudio AI is a content studio for travel agencies, tour operators and hotels.
+Travel teams generate destination reels, ad creatives and listing visuals with every
 model the [Higgsfield REST API](https://docs.higgsfield.ai) exposes: Seedance,
 Kling, Wan, Soul, Cinema Studio, Genjutsu, MiniMax, LTX, PixVerse, Grok,
 Recraft, Qwen, Ideogram and more — **47 picker entries covering 81 documented
@@ -44,7 +45,7 @@ pnpm db:init --admin=you@example.com   # indexes + Effects presets (+ admin role
 ```
 
 For offline development set in `.env.local`:
-`MONGODB_URI=mongodb://127.0.0.1:27027/?replicaSet=vireo`,
+`MONGODB_URI=mongodb://127.0.0.1:27027/?replicaSet=safarstudio`,
 `HF_API_BASE_URL=http://localhost:4010`, `HF_CREDENTIALS=mock:mock`,
 `SIGNUP_BONUS_CREDITS=200`, `E2E_TEST_MODE=true`. Magic links are printed to the
 dev-server log (no Resend key needed); media is stored under `.data/media`; the

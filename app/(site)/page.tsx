@@ -100,20 +100,20 @@ export default async function ExplorePage() {
         <div className="mx-auto flex min-h-[600px] max-w-[1440px] flex-col items-center justify-start gap-6 px-4 pt-20 pb-44 text-center md:min-h-[min(90svh,820px)] md:pt-28">
           <span className="inline-flex h-8 items-center gap-1.5 rounded-full border border-white/10 bg-black/30 px-3 text-xs font-medium text-white/85 backdrop-blur-md">
             <Sparkles className="size-3.5 text-lime" aria-hidden />
-            Every frontier model, one studio
+            Built for travel agencies and tour operators
           </span>
           <h1
             id="hero-title"
             className="font-display text-[44px] leading-[0.92] text-white sm:text-[60px] md:text-[80px] lg:text-[96px]"
           >
-            Direct the shot.
+            Sell the trip.
             <br />
-            <span className="text-lime">Skip the set.</span>
+            <span className="text-lime">Skip the shoot.</span>
           </h1>
           <p className="max-w-[560px] text-base text-white/80 [text-shadow:0_1px_14px_rgba(0,0,0,0.7)] md:text-lg">
-            Turn a sentence or a single frame into cinematic video and images.
-            Seedance, Kling, Soul and dozens more models share one credit
-            balance and one library.
+            Turn a hotel photo or a one-line brief into destination reels, ad
+            creatives and listing visuals. Seedance, Kling, Soul and dozens more
+            models share one credit balance and one library.
           </p>
           <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
             <Link

@@ -23,7 +23,7 @@ export const EMAIL_COLORS = {
 const font =
   "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 
-/** Shared dark frame for every Vireo email. */
+/** Shared dark frame for every SafarStudio AI email. */
 export function EmailFrame({
   preview,
   brand,

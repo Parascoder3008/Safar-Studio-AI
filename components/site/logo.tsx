@@ -3,16 +3,13 @@ import Link from "next/link"
 import { BRAND } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
-/** Vireo mark: a lime tile with a wing-shaped V. Placeholder wordmark until brand assets arrive. */
+/** SafarStudio AI mark: a lime tile with a paper plane. Placeholder until brand assets arrive. */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden className={cn("size-8", className)}>
       <rect width="32" height="32" rx="8" fill="#D1FE17" />
-      <path
-        d="M7.5 9.5c2.6 0 4.4 1.3 5.6 3.9L16 19.6l4.3-9.2c.5-1 1.4-1.6 2.5-1.6h1.7L17.6 23.5h-3.2L9.2 12.4c-.4-.9-1-1.4-1.7-1.6V9.5z"
-        fill="#131517"
-      />
-      <circle cx="23.6" cy="8.6" r="1.3" fill="#131517" />
+      <path d="M6.5 15.2 25.5 7.5l-5.6 17-5.3-5.6z" fill="#131517" />
+      <path d="m14.6 18.9 10.9-11.4-8.3 13.3z" fill="#D1FE17" opacity="0.35" />
     </svg>
   )
 }

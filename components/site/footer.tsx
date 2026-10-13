@@ -100,7 +100,7 @@ export function Footer() {
             type="button"
             className="hover:text-lime"
             onClick={() =>
-              window.dispatchEvent(new Event("vireo:cookie-preferences"))
+              window.dispatchEvent(new Event("safarstudio:cookie-preferences"))
             }
           >
             Cookie settings

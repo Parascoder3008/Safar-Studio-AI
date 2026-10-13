@@ -1,6 +1,6 @@
-# Vireo — contract for coding agents
+# SafarStudio AI — contract for coding agents
 
-Vireo is a credit-metered AI image/video studio on the Higgsfield REST API,
+SafarStudio AI is a credit-metered AI image/video studio on the Higgsfield REST API,
 scaffolded from `higgsfield-ai/app-templates` (studio). Read `README.md`,
 `docs/decisions.md` and `docs/model-catalog.md` before changing behaviour.
 

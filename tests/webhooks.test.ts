@@ -223,7 +223,7 @@ describe("Higgsfield webhook route", () => {
   const call = (gid: string, token: string, body: unknown) =>
     higgsfieldWebhook(
       new Request(
-        `https://vireo.test/api/webhooks/higgsfield?gid=${gid}&t=${token}`,
+        `https://safarstudio.test/api/webhooks/higgsfield?gid=${gid}&t=${token}`,
         {
           method: "POST",
           headers: { "content-type": "application/json" },

@@ -80,7 +80,7 @@ export const useDock = create<DockState>()(
         set((state) => update(state, surface, { media: [] })),
     }),
     {
-      name: "vireo.dock.v1",
+      name: "safarstudio.dock.v1",
       storage: browserStorage(),
       partialize: (state) => ({
         surfaces: Object.fromEntries(

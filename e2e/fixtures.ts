@@ -6,7 +6,7 @@ export const test = base.extend({
     await context.addInitScript(() => {
       try {
         localStorage.setItem(
-          "vireo.consent.v1",
+          "safarstudio.consent.v1",
           JSON.stringify({
             essential: true,
             analytics: false,

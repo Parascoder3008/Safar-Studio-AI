@@ -6,7 +6,7 @@ import { Tag, X } from "lucide-react"
 import { BRAND } from "@/lib/brand"
 import { useLocalFlag } from "@/lib/studio/local-flag"
 
-const KEY = `vireo.promo.dismissed:${BRAND.promo}`
+const KEY = `safarstudio.promo.dismissed:${BRAND.promo}`
 
 /** Optional dismissible promo bar; copy comes from NEXT_PUBLIC_PROMO_BAR. */
 export function PromoBar() {

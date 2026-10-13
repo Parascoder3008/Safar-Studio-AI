@@ -49,4 +49,4 @@ next-env.d.ts
 # Reference captures of higgsfield.ai (third-party content; local only)
 /_research/
 /docs/screens/*
-!/docs/screens/vireo-*
+!/docs/screens/safarstudio-*

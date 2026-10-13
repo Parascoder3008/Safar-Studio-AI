@@ -27,7 +27,7 @@ export type ConsentState = {
   marketing: boolean
   at: number
 }
-const KEY = "vireo.consent.v1"
+const KEY = "safarstudio.consent.v1"
 
 export function readConsent(): ConsentState | null {
   try {
@@ -51,13 +51,14 @@ export function CookieConsent() {
 
   useEffect(() => {
     const reopen = () => setPreferences(true)
-    window.addEventListener("vireo:cookie-preferences", reopen)
-    return () => window.removeEventListener("vireo:cookie-preferences", reopen)
+    window.addEventListener("safarstudio:cookie-preferences", reopen)
+    return () =>
+      window.removeEventListener("safarstudio:cookie-preferences", reopen)
   }, [])
 
   const decide = (next: { analytics: boolean; marketing: boolean }) => {
     setStored(JSON.stringify({ essential: true, ...next, at: Date.now() }))
-    window.dispatchEvent(new Event("vireo:consent"))
+    window.dispatchEvent(new Event("safarstudio:consent"))
     setPreferences(false)
   }
 

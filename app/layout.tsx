@@ -38,12 +38,12 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? BRAND.productionUrl),
   title: {
-    default: `${BRAND.name} — AI image & video studio`,
+    default: `${BRAND.name} — AI content studio for travel`,
     template: `%s · ${BRAND.name}`,
   },
   description: BRAND.description,
   openGraph: {
-    title: `${BRAND.name} — AI image & video studio`,
+    title: `${BRAND.name} — AI content studio for travel`,
     description: BRAND.description,
     images: ["/media/hero/coast.jpg"],
     type: "website",
