@@ -72,6 +72,12 @@ const schema = z.object({
   R2_ENDPOINT: optionalString,
 
   CRON_SECRET: optionalString,
+  /**
+   * Launch switch: lets a production deployment boot while services are still
+   * being connected. Missing services are logged once and the features that
+   * need them fail with their own errors. Remove it before real users arrive.
+   */
+  ALLOW_INCOMPLETE_SETUP: bool(false),
   /** Test-only hooks (dev mailbox route). Never honoured on the production deployment. */
   E2E_TEST_MODE: bool(false),
   /** Required header value for the test mailbox outside development (preview deploys). */
@@ -119,12 +125,17 @@ export function env(): Env {
   const value = parsed.data
   if (value.NODE_ENV === "production" && !isBuildPhase()) {
     const missing = REQUIRED_IN_PRODUCTION.filter((key) => !value[key])
-    if (missing.length)
+    const list = missing.map((key) => `  • ${key}`).join("\n")
+    if (missing.length && !value.ALLOW_INCOMPLETE_SETUP)
       throw new EnvError(
-        `Missing required production environment variables:\n${missing
-          .map((key) => `  • ${key}`)
-          .join("\n")}\nSee .env.example for what each one does.`
+        `Missing required production environment variables:\n${list}\nSee .env.example for what each one does.`
       )
+    if (missing.length && !warned) {
+      warned = true
+      console.warn(
+        `[env] ALLOW_INCOMPLETE_SETUP is on. Features that need these are unavailable:\n${list}`
+      )
+    }
   }
   if (value.NODE_ENV !== "production" && !warned) {
     warned = true

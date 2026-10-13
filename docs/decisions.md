@@ -59,6 +59,20 @@ the UI inventory still show the old brand. Re-capture them with
   set inherited from Vireo. They need travel presets with covers generated
   through the app once a Higgsfield key is configured.
 
+## Hosting on Vercel Hobby (2026-10-13)
+
+- **`ALLOW_INCOMPLETE_SETUP`** lets production boot before all 14 required
+  services are connected. It logs the missing variables once, and each
+  feature fails with its own error (no DB means signed-out, no Stripe means
+  no checkout). Without it, production still fails fast. Remove it before
+  real users arrive.
+- **Reconcile cron runs daily (`0 3 * * *`).** Hobby only allows daily cron
+  jobs. Before generation goes live, either move to Pro and restore
+  `* * * * *`, or call `/api/cron/reconcile` every few minutes from an
+  external scheduler with `Authorization: Bearer $CRON_SECRET`. Webhooks
+  remain the main path for finishing runs.
+- Vercel's Hobby plan is for non-commercial use. Move to Pro before selling.
+
 ## Sources and precedence
 
 1. **Live docs win for API behavior, template wins for UI** (brief §0.3). Model
