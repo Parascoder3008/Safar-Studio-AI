@@ -9,6 +9,19 @@ endpoints**. Users sign in with a magic link, pay with Stripe credits, and keep
 everything in a personal library. The UX follows higgsfield.ai (dark UI, lime
 accent, generator panel, justified feeds); the brand, copy and media are ours.
 
+**Build prompt:** [`PROMPT.md`](PROMPT.md) is the prompt this app was built
+from, with the SafarStudio AI brand filled in. Paste it into Claude Code from
+an empty folder to build your own.
+
+**Open-source foundations**
+
+| Repository | How it's used |
+|---|---|
+| [higgsfield-ai/app-templates](https://github.com/higgsfield-ai/app-templates) | Higgsfield's open Studio template: UI components, design tokens, model catalog and API client. No license file; published as a public registry for building on the Higgsfield API. |
+| [albertshiney/higgsfieldclone](https://github.com/albertshiney/higgsfieldclone) | The full studio this repo started from (auth, credits, Stripe, storage, 47 models). No license file. |
+| [higgsfield-ai/higgsfield-js](https://github.com/higgsfield-ai/higgsfield-js), [cli](https://github.com/higgsfield-ai/cli), [skills](https://github.com/higgsfield-ai/skills) | Reference for the API, model parameters and prompt guidance. |
+| [Anil-matcha/Open-Higgsfield-AI](https://github.com/Anil-matcha/Open-Higgsfield-AI) | Related open-source studio ("Open Generative AI") on the MuAPI platform. Not part of this codebase. |
+
 | Concern | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router, Turbopack), React 19, TypeScript strict |
