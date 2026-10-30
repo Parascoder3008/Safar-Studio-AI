@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "local": "tsx scripts/local.ts",
+    "hf:check": "tsx scripts/check-higgsfield.ts",
+    "example:seedance": "tsx examples/seedance/index.ts",
     "build": "next build && node scripts/check-client-secrets.mjs",
     "start": "next start",
     "lint": "eslint",
@@ -27,6 +29,7 @@
     "@aws-sdk/client-s3": "^3.1141.0",
     "@aws-sdk/lib-storage": "^3.1141.0",
     "@base-ui/react": "^1.8.0",
+    "@higgsfield/client": "^0.2.6",
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
     "@tanstack/react-virtual": "^3.14.13",

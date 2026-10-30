@@ -100,6 +100,24 @@ To run the pieces separately: `pnpm db:dev`, `pnpm mock:higgsfield` and
 `pnpm dev` in three terminals, with `MONGODB_URI=mongodb://127.0.0.1:27027/?replicaSet=safarstudio`,
 `HF_API_BASE_URL=http://localhost:4010` and `HF_CREDENTIALS=mock:mock` in `.env.local`.
 
+## Higgsfield API setup
+
+1. Create an API key at [open.higgsfield.ai/api-keys](https://open.higgsfield.ai/api-keys)
+   (console.higgsfield.ai is the same service). It has a key ID and a secret.
+2. Set `HF_CREDENTIALS=KEY_ID:KEY_SECRET` and `HF_API_BASE_URL=https://api.higgsfield.ai`:
+   in `.env.local` on your computer (git-ignored), or as environment variables in
+   Vercel or your cloud environment. Never commit the key. A variable set in the
+   environment overrides `.env.local`.
+3. `pnpm hf:check` makes a free check that the API accepts the key. It looks up a
+   request that doesn't exist, so nothing is generated or billed, and it never
+   prints the key.
+4. `pnpm pricing:sync` refreshes the credit prices from the live estimate endpoint.
+5. `pnpm example:seedance` is a minimal Seedance 2.5 text-to-video example using the
+   official SDK (`@higgsfield/client/v2`, `subscribe`). Without `--run` it only
+   prints what it would send. **With `--run` it makes one billable 5 s, 720p
+   generation** and prints the video URL. It reports failed, moderated or
+   unfinished requests as failures.
+
 ## Real services
 
 | Service | What to set | Notes |
